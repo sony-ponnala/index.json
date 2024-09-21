@@ -1,0 +1,127 @@
+[
+    {
+        "id": "d50d552e5df6eb8a",
+        "type": "tab",
+        "label": "Flow 4",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "89771084b23f3813",
+        "type": "inject",
+        "z": "d50d552e5df6eb8a",
+        "name": "",
+        "props": [],
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 150,
+        "y": 160,
+        "wires": [
+            [
+                "465318ad82696e47"
+            ]
+        ]
+    },
+    {
+        "id": "465318ad82696e47",
+        "type": "http request",
+        "z": "d50d552e5df6eb8a",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://api.forismatic.com/api/1.0/?method=getQuote&format=json&lang=en",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 330,
+        "y": 160,
+        "wires": [
+            [
+                "7bb951419fd90460",
+                "d29e0cc2a98588a6"
+            ]
+        ]
+    },
+    {
+        "id": "a39e6ee84eb15352",
+        "type": "debug",
+        "z": "d50d552e5df6eb8a",
+        "name": "debug 4",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 560,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "7bb951419fd90460",
+        "type": "function",
+        "z": "d50d552e5df6eb8a",
+        "name": "function 1",
+        "func": "var quote = JSON.parse(msg.payload);\nmsg.payload =msg.payload = `${msg.payload.contents.quoteText} — ${msg.payload.contents.quoteAuthor}`;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 220,
+        "wires": [
+            [
+                "d56f2eebe1fa45d6"
+            ]
+        ]
+    },
+    {
+        "id": "d29e0cc2a98588a6",
+        "type": "debug",
+        "z": "d50d552e5df6eb8a",
+        "name": "debug 5",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 540,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "d56f2eebe1fa45d6",
+        "type": "template",
+        "z": "d50d552e5df6eb8a",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "\n<h2>Random Quote</h2>\n<p>{{payload}}</p>\n",
+        "output": "str",
+        "x": 620,
+        "y": 220,
+        "wires": [
+            [
+                "a39e6ee84eb15352"
+            ]
+        ]
+    }
+]
